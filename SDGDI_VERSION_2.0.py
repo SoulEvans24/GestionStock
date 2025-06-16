@@ -29,6 +29,18 @@ def solicitarProducto():
         print("Debe ingresar valores enteros positivos")
         
     
+
+
+def buscarProducto(nombre):
+    for producto in lista_productos:
+        if producto["nombre"]==nombre:
+            return producto
+    return
+        #print("-"*60)
+        #print(f"Nombre: {nombre} \t Precio: ${precio} \t Stock: {stock} unidades")
+        #print("-"*60)
+        #return [nombre,precio,stock]
+
 def guardarProducto(nombre,precio,stock):
 
     if buscarProducto==None:
@@ -44,16 +56,6 @@ def guardarProducto(nombre,precio,stock):
     print("Se guardado correctamente el producto")
     #print("Se guardado correctamente el producto")
     #print("No se puede guardar un producto con el mismo nombre que uno ya creado")
-
-def buscarProducto(nombre):
-    for producto in lista_productos:
-        if producto["nombre"]==nombre:
-            return producto
-    return
-        #print("-"*60)
-        #print(f"Nombre: {nombre} \t Precio: ${precio} \t Stock: {stock} unidades")
-        #print("-"*60)
-        #return [nombre,precio,stock]
 
 def actualizarProducto(nombre,nuevoPrecio,nuevoStock):
     productoEncontrado=buscarProducto(nombre)
@@ -79,6 +81,14 @@ def mostarInventarioCompleto():
         
         print("-"*60)
 
+def eliminarProducto(nombre):
+    productoEncontrado=buscarProducto(nombre)
+    if productoEncontrado!=None:
+        lista_productos.remove(productoEncontrado)
+        return True
+    else:
+        return False
+
 
 
 while opcion!="6":
@@ -102,7 +112,9 @@ while opcion!="6":
                 guardarProducto(nuevoProducto[0],nuevoProducto[1],nuevoProducto[2])
         case "2":
             nombreProducto=input("Ingrese el nombre del producto a buscar: ").lower()
-            buscarProducto(nombreProducto)
+            productoEncontrado=buscarProducto(nombreProducto)
+            if productoEncontrado!=None:
+                print(f"Nombre: {productoEncontrado["nombre"]} \t Precio: ${productoEncontrado["precio"]} \t Stock: {productoEncontrado["cantidad"]} unidades")
         case "3":
             print("*Ingrese los datos del producto a actualizar*")
             nuevoProducto=solicitarProducto()#[nombre,precio,stock]
@@ -111,8 +123,12 @@ while opcion!="6":
         case "4":
             mostarInventarioCompleto()
         case "5":
-            #crear el eliminar producto
-            pass#el pass se debe borrar cuando coloquen el código correspondiente
+            nombreProducto=input("Ingrese el nombre del producto a eliminar: ").lower()
+            eliminarProducto(nombreProducto)
+            if eliminarProducto(nombreProducto)==True:
+                print("Producto eliminado correctamente.")
+            else:
+                print("No se ha podido eliminar el producto.")
         case "6":
             #salir...
             pass        
